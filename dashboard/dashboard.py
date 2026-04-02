@@ -4,9 +4,7 @@ import matplotlib.pyplot as plt
 import matplotlib.ticker as mticker
 import seaborn as sns
 
-# ========================
-# CONFIG
-# ========================
+# == CONFIG ==
 st.set_page_config(
     page_title="Bike Sharing Dashboard",
     page_icon="🚲",
@@ -16,9 +14,7 @@ st.set_page_config(
 sns.set_theme(style="whitegrid")
 plt.rcParams['figure.dpi'] = 120
 
-# ========================
-# LOAD DATA
-# ========================
+# == LOAD DATA ==
 @st.cache_data
 def load_data():
     day_df = pd.read_csv("dashboard/main_data.csv")
@@ -56,9 +52,7 @@ def load_hour_data():
 day_df  = load_data()
 hour_df = load_hour_data()
 
-# ========================
-# SIDEBAR
-# ========================
+# == SIDEBAR ==
 st.sidebar.image("https://img.icons8.com/emoji/96/bicycle-emoji.png", width=80)
 st.sidebar.title("🚲 Bike Sharing")
 st.sidebar.markdown("---")
@@ -70,11 +64,8 @@ selected_year   = st.sidebar.selectbox("Filter Tahun", year_options)
 selected_season = st.sidebar.selectbox("Filter Musim", season_options)
 
 st.sidebar.markdown("---")
-st.sidebar.caption("Dashboard by: [Nama Kamu]")
 
-# ========================
-# APPLY FILTER — ke day_df DAN hour_df
-# ========================
+# == APPLY FILTER — ke day_df DAN hour_df ==
 filtered_day  = day_df.copy()
 filtered_hour = hour_df.copy()
 
@@ -86,9 +77,7 @@ if selected_season != 'Semua':
     filtered_day  = filtered_day[filtered_day['season'] == selected_season]
     filtered_hour = filtered_hour[filtered_hour['season'] == selected_season]
 
-# ========================
-# HEADER
-# ========================
+# == HEADER ==
 st.title("🚲 Bike Sharing Dashboard")
 st.markdown("Analisis pola peminjaman sepeda berdasarkan cuaca, musim, dan waktu.")
 
@@ -101,9 +90,7 @@ if filter_info:
 
 st.markdown("---")
 
-# ========================
-# METRIC CARDS
-# ========================
+# == METRIC CARDS ==
 col1, col2, col3, col4 = st.columns(4)
 col1.metric("Total Peminjaman",    f"{filtered_day['cnt'].sum():,.0f}")
 col2.metric("Rata-rata Harian",    f"{filtered_day['cnt'].mean():,.0f}")
@@ -112,9 +99,7 @@ col4.metric("Peminjaman Terendah", f"{filtered_day['cnt'].min():,.0f}")
 
 st.markdown("---")
 
-# ========================
-# Q1: MUSIM & CUACA
-# ========================
+# == Q1: MUSIM & CUACA ==
 st.subheader("📊 Pengaruh Musim dan Cuaca terhadap Peminjaman Harian")
 st.caption("Visualisasi ini menunjukkan bagaimana musim dan kondisi cuaca mempengaruhi jumlah peminjaman sepeda per hari.")
 
@@ -174,9 +159,7 @@ with st.expander("💡 Baca Penjelasan Insight"):
 
 st.markdown("---")
 
-# ========================
-# Q2: POLA PER JAM
-# ========================
+# == Q2: POLA PER JAM ==
 st.subheader("⏰ Pola Peminjaman per Jam: Hari Kerja vs Hari Libur")
 st.caption("Visualisasi ini menunjukkan perbedaan pola peminjaman sepeda antara hari kerja dan hari libur berdasarkan jam.")
 
@@ -222,9 +205,7 @@ with st.expander("💡 Baca Penjelasan Insight"):
 
 st.markdown("---")
 
-# ========================
-# CLUSTERING
-# ========================
+# == CLUSTERING 
 st.subheader("🕐 Segmentasi Waktu Berdasarkan Volume Peminjaman")
 st.caption("Jam dalam sehari dikelompokkan ke dalam 5 kategori waktu untuk melihat distribusi peminjaman sepeda.")
 
